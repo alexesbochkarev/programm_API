@@ -86,16 +86,7 @@ DATABASES = {
          'NAME': BASE_DIR / 'db.sqlite3',
      }
  }
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#        'HOST': 'localhost',
-#        'PORT': '',
-#        'NAME': 'programm',
-#        'USER': 'programm_user',
-#        'PASSWORD': '123456789',
-#    },
-#}
+
 
 
 # Password validation
@@ -152,3 +143,6 @@ REST_FRAMEWORK = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+from prod import *
+from local import *
