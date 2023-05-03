@@ -9,4 +9,6 @@ urlpatterns = [
     path('news/<int:pk>/', views.NewsDetailView.as_view()),
     path('instructions/', views.InstructionListView.as_view()),
     path('instructions/<int:pk>/', views.InstructionDetailView.as_view()),
+    path('url/', views.UrlListView.as_view()),
+    path('url/<int:pk>/', views.UrlDetailView.as_view()),
 ]

@@ -1,7 +1,7 @@
 from rest_framework import generics
 
-from .models import Program, NewsModel, InstructionModel
-from .serializers import ProgramSerializers, NewsModelSerializers, InstructionModelSerializers
+from .models import Program, NewsModel, InstructionModel, UrlModel
+from .serializers import ProgramSerializers, NewsModelSerializers, InstructionModelSerializers, UrlModelSerializers
 
 
 class ProgramListView(generics.ListAPIView):
@@ -32,3 +32,13 @@ class InstructionListView(generics.ListAPIView):
 class InstructionDetailView(generics.RetrieveAPIView):
     serializer_class = InstructionModelSerializers
     queryset = InstructionModel.objects.all()
+
+
+class UrlListView(generics.ListAPIView):
+    serializer_class = UrlModelSerializers
+    queryset = UrlModel.objects.all()
+
+
+class UrlDetailView(generics.RetrieveAPIView):
+    serializer_class = UrlModelSerializers
+    queryset = UrlModel.objects.all()

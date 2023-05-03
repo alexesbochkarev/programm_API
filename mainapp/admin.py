@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Program, NewsModel, InstructionModel
+from .models import Program, NewsModel, InstructionModel, UrlModel
 
 
 @admin.register(Program)
@@ -21,4 +21,9 @@ class InstructionModelAdmin(admin.ModelAdmin):
     list_display = ('title', 'created_date')
     list_filter = ('created_date',)
     search_fields = ('name', 'site')
-    
+
+
+class UrlModelAdmin(admin.ModelAdmin):
+    list_display = ('id', '__str__')
+
+admin.site.register(UrlModel, UrlModelAdmin)
