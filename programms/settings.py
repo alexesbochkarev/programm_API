@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'corsheaders',
+    'drf_yasg',
 
     'mainapp'
 ]
@@ -144,5 +145,5 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-from prod import *
-from local import *
+from .prod import *
+from .local import *
