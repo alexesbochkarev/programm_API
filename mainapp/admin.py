@@ -4,8 +4,8 @@ from .models import Program, NewsModel, InstructionModel, UrlModel
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code', 'created_date')
-    list_filter = ('created_date',)
+    list_display = ('name', 'code', 'level', 'created_date')
+    list_filter = ('created_date', 'level')
     search_fields = ('name', 'code')
 
 

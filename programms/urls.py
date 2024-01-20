@@ -7,7 +7,8 @@ from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('mainapp.urls'))
+    path('api/', include('mainapp.urls')),
+    path('api/', include('users.urls')),
 ]
 
 # swagger urlpatterns

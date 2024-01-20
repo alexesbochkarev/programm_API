@@ -2,9 +2,15 @@ from django.db import models
 
 
 class Program(models.Model):
+    LEVEL_CHOICES = (
+        ('A', 'Для любого пользователя'),
+        ('B', 'Для зарегестрированного'),
+        ('C', 'Для админа'),
+    )
     name = models.CharField('Название', max_length=255)
     code = models.CharField('Код', max_length=255)
     type = models.CharField('Тип программы', max_length=255)
+    level = models.CharField(max_length=1, choices=LEVEL_CHOICES, default="A")
     description = models.TextField('Описание', null=True, blank=True)
     visibility = models.BooleanField(default=False)
     created_date = models.DateTimeField('Дата создания', auto_now_add=True)
@@ -36,7 +42,7 @@ class NewsModel(models.Model):
 
 class InstructionModel(models.Model):
     title = models.CharField('Название', max_length=255)
-    site = models.CharField('Сайт', max_length=500)
+    site = models.CharField('Сайт', max_length=500, null=True, blank=True)
     visibility = models.BooleanField(default=False)
     upload = models.FileField(upload_to="uploads/", null=True, blank=True)
     created_date = models.DateTimeField('Дата создания', auto_now_add=True)
