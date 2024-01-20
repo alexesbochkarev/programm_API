@@ -1,9 +1,10 @@
 from django.contrib.auth import authenticate
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.hashers import make_password
-from .models import User
 
+from rest_framework.authtoken.models import Token
 from rest_framework import serializers
+
+from .models import User
 
 
 class CustomAuthTokenSerializer(serializers.Serializer):
@@ -44,14 +45,19 @@ class CustomAuthTokenSerializer(serializers.Serializer):
     
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'password',  'first_name', 'last_name', 'contry', 'city')
+        fields = ('id', 'email', 'password',  'first_name', 'last_name', 'contry', 'city', 'token')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+    
+    def get_token(self, user):
+        token = Token.objects.get(user=user)
+        return str(token)
     
 
 class ForgotPasswordSerializer(serializers.Serializer):
