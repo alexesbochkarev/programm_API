@@ -45,19 +45,23 @@ class CustomAuthTokenSerializer(serializers.Serializer):
     
 
 class RegistrationSerializer(serializers.ModelSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
+    status = serializers.CharField(read_only=True)
+    detail = serializers.CharField(read_only=True)
     class Meta:
         model = User
-        fields = ('id', 'email', 'password',  'first_name', 'last_name', 'contry', 'city', 'token')
-        extra_kwargs = {'password': {'write_only': True}}
+        fields = ('email', 'password',  'first_name', 'last_name', 'contry', 'city', 'status', 'detail')
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'first_name': {'write_only': True},
+            'last_name': {'write_only': True},
+            'contry': {'write_only': True},
+            'token': {'write_only': True},
+        }
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
     
-    def get_token(self, user):
-        token = Token.objects.get(user=user)
-        return str(token)
     
 
 class ForgotPasswordSerializer(serializers.Serializer):

@@ -4,21 +4,21 @@ from .models import Program, NewsModel, InstructionModel, UrlModel
 
 @admin.register(Program)
 class ProgramAdmin(admin.ModelAdmin):
-    list_display = ('name', 'code', 'level', 'created_date')
+    list_display = ('name', 'code', 'level', 'priority', 'created_date')
     list_filter = ('created_date', 'level')
     search_fields = ('name', 'code')
 
 
 @admin.register(NewsModel)
 class NewsModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_date')
+    list_display = ('title', 'level', 'created_date',)
     list_filter = ('created_date',)
     search_fields = ('title', 'text')
 
 
 @admin.register(InstructionModel)
 class InstructionModelAdmin(admin.ModelAdmin):
-    list_display = ('title', 'created_date')
+    list_display = ('title', 'created_date', 'level')
     list_filter = ('created_date',)
     search_fields = ('name', 'site')
 

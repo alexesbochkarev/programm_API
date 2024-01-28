@@ -1,5 +1,6 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.hashers import make_password
+from random import choice
 
 
 class UserManager(BaseUserManager):
@@ -19,6 +20,16 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password, **extra_fields):
+        number_list = [x for x in range(10)]  # Use of list comprehension
+        code_items_for_otp = []
+
+        for i in range(6):
+            num = choice(number_list)
+            code_items_for_otp.append(num)
+
+        code_string = "".join(str(item) for item in code_items_for_otp)
+        extra_fields.setdefault("otp", code_string)
+        extra_fields.setdefault("is_active", False)
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
         return self._create_user(email, password, **extra_fields)

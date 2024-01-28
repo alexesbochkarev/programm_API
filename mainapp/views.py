@@ -30,7 +30,18 @@ class ProgramDetailView(generics.RetrieveAPIView):
 
 class NewsListView(generics.ListAPIView):
     serializer_class = NewsModelSerializers
-    queryset = NewsModel.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = LevelFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_superuser:
+                return NewsModel.objects.all()
+            else:
+                return NewsModel.objects.filter(Q(level="A") | Q(level="B"))
+        else:
+            return NewsModel.objects.filter(level="A")
 
 
 class NewsDetailView(generics.RetrieveAPIView):
@@ -40,7 +51,18 @@ class NewsDetailView(generics.RetrieveAPIView):
 
 class InstructionListView(generics.ListAPIView):
     serializer_class = InstructionModelSerializers
-    queryset = InstructionModel.objects.all()
+    filter_backends = (DjangoFilterBackend,)
+    filterset_class = LevelFilter
+    
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_authenticated:
+            if user.is_superuser:
+                return InstructionModel.objects.all()
+            else:
+                return InstructionModel.objects.filter(Q(level="A") | Q(level="B"))
+        else:
+            return InstructionModel.objects.filter(level="A")
 
 
 class InstructionDetailView(generics.RetrieveAPIView):

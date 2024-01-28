@@ -159,8 +159,8 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = "testfreelans@gmail.com"
-EMAIL_HOST_PASSWORD = "oaevxwhsqzoqhcrg"
-DEFAULT_FROM_EMAIL = "django-auth@mail.ru"
+EMAIL_HOST_PASSWORD = "gfgpxeihppvjlmek"
+DEFAULT_FROM_EMAIL = "testfreelans@gmail.com"
 
 CORS_ORIGIN_ALLOW_ALL = True
 

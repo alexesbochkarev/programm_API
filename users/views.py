@@ -70,7 +70,49 @@ class RegistrationAPIView(CustomAPIView):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response(serializer.data, status=201)
+        email=serializer.data["email"]
+        try:
+            user = User.objects.get(email=email)
+        except ObjectDoesNotExist:
+            raise APIException(code=400, detail="Ошибка регистрации")
+        send_mail(
+            subject=f'Привет! {email}',
+            message=f'Код для подтверждения аккаунта: {user.otp}',
+            from_email='noreply@church.com',
+            recipient_list=[email,]
+        )
+        succes = {
+            'status': 'success', 
+            'detail': 'Код для подтверждения отправлен на указанный email'
+        }
+        return Response(succes, status=201)
+    
+
+class ApproveEmailAPIView(CustomAPIView):
+    """Подтвердить код из письма"""
+    serializer_class = VerifyPasswordSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        email = serializer.data["email"]
+        otp = serializer.data["otp_code"]
+        try:
+            user = User.objects.get(email=email, otp=otp)
+        except ObjectDoesNotExist:
+            raise APIException(code=400, detail="Неверный код из письма")
+        user.is_active = True
+        user.update()
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "contry": user.contry,
+            "city": user.city
+        }, status=200)
     
 
 class ForgotPasswordAPIView(CustomAPIView):
@@ -112,7 +154,11 @@ class VerifyPasswordAPIView(CustomAPIView):
         return Response({
             'token': token.key,
             'user_id': user.pk,
-            'email': user.email
+            'email': user.email,
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "contry": user.contry,
+            "city": user.city
         }, status=200)
 
 

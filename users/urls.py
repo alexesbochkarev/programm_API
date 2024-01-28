@@ -6,7 +6,8 @@ from .views import (
     RegistrationAPIView,
     ForgotPasswordAPIView,
     VerifyPasswordAPIView,
-    UpdatePasswordAPIView
+    UpdatePasswordAPIView,
+    ApproveEmailAPIView
 )
 
 
@@ -14,6 +15,7 @@ urlpatterns = [
     path('auth/login', CustomAuthToken.as_view()),
     path('auth/logout', LogoutAuthToken.as_view()),
     path('auth/registration', RegistrationAPIView.as_view()),
+    path('auth/registration_approve', ApproveEmailAPIView.as_view()),
     path('auth/password_forgot', ForgotPasswordAPIView.as_view()),
     path('auth/password_verify', VerifyPasswordAPIView.as_view()),
     path('auth/password_update', UpdatePasswordAPIView.as_view()),
