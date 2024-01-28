@@ -2,7 +2,7 @@ from rest_framework import generics
 from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
 
-from .filters import LevelFilter
+from .filters import ProgramLevelFilter, NewsLevelFilter, InstructionLevelFilter
 from .models import Program, NewsModel, InstructionModel, UrlModel
 from .serializers import ProgramSerializers, NewsModelSerializers, InstructionModelSerializers, UrlModelSerializers
 
@@ -10,7 +10,7 @@ from .serializers import ProgramSerializers, NewsModelSerializers, InstructionMo
 class ProgramListView(generics.ListAPIView):
     serializer_class = ProgramSerializers
     filter_backends = (DjangoFilterBackend,)
-    filterset_class = LevelFilter
+    filterset_class = ProgramLevelFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -31,7 +31,7 @@ class ProgramDetailView(generics.RetrieveAPIView):
 class NewsListView(generics.ListAPIView):
     serializer_class = NewsModelSerializers
     filter_backends = (DjangoFilterBackend,)
-    filterset_class = LevelFilter
+    filterset_class = NewsLevelFilter
 
     def get_queryset(self):
         user = self.request.user
@@ -52,8 +52,8 @@ class NewsDetailView(generics.RetrieveAPIView):
 class InstructionListView(generics.ListAPIView):
     serializer_class = InstructionModelSerializers
     filter_backends = (DjangoFilterBackend,)
-    filterset_class = LevelFilter
-    
+    filterset_class = InstructionLevelFilter
+
     def get_queryset(self):
         user = self.request.user
         if user.is_authenticated:
